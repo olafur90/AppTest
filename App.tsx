@@ -5,55 +5,66 @@
  * @format
  */
 
-import React from 'react';
+import 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
+  Alert,
+  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
+  TextInput,
   useColorScheme,
+  useWindowDimensions,
   View,
 } from 'react-native';
+import { Drawer } from 'react-native-drawer-layout';
+import { SceneMap, TabView } from 'react-native-tab-view';
 
 import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
+  Colors
 } from 'react-native/Libraries/NewAppScreen';
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+const FirstRoute = () => (
+  <View style={styles.sectionContainer}>
+    <Text style={styles.sectionTitle}>First</Text>
+    <Text style={styles.sectionDescription}>
+      Edit <Text style={styles.highlight}>App.tsx</Text> to change this
+      screen and then come back to see your edits.
+    </Text>
+    <TextInput id='prufa' style={{ height: 40, borderColor: 'gray', borderWidth: 2 }} />
+    <Button // Alert with id from TextInput above
+      title="Alert"
+      onPress={() => Alert.alert('Alert Title', 'My Alert Msg', [
+        { text: 'Ask me later', onPress: () => console.log('Ask me later pressed') },
+        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        { text: 'OK', onPress: () => console.log('OK Pressed') },
+      ])}
+    />
+  </View>
+)
+
+const SecondRoute = () => (
+  <View style={styles.sectionContainer}>
+    <Text style={styles.sectionTitle}>Second</Text>
+    <Text style={styles.sectionDescription}>
+      Edit <Text style={styles.highlight}>App.tsx</Text> to change this
+      screen and then come back to see your edits.
+    </Text>
+  </View>
+)
+
+const renderScene = SceneMap({
+  first: FirstRoute,
+  second: SecondRoute
+});
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -62,37 +73,37 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const layout = useWindowDimensions();
+
+  const [open, setOpen] = useState(false);
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    {key: 'first', title: 'First'},
+    {key: 'second', title: 'Second'},
+  ]);
+  
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
+    <Drawer
+      open={open}
+      onOpen={() => setOpen(true)}
+      onClose={() => setOpen(false)}
+      renderDrawerContent={() => {
+        return <Text>Drawer contents</Text>
+      }}
+
+    >
+      <TabView
+      navigationState={{ index, routes }}
+      renderScene={renderScene}
+      onIndexChange={setIndex}
+      initialLayout={{ width: layout.width }}
+    />
+    <Button
+        onPress={() => setOpen((prevOpen) => !prevOpen)}
+        title={`${open ? 'Close' : 'Open'} drawer`}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+  </Drawer>
   );
 }
 
@@ -113,6 +124,10 @@ const styles = StyleSheet.create({
   highlight: {
     fontWeight: '700',
   },
+  button: {
+    margin: 10,
+    width: 50,
+  }
 });
 
 export default App;
