@@ -27,6 +27,7 @@ import { SceneMap, TabView } from 'react-native-tab-view';
 import {
   Colors
 } from 'react-native/Libraries/NewAppScreen';
+import { Menu } from './components/Menu/menu';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -93,16 +94,24 @@ function App(): React.JSX.Element {
       }}
 
     >
-      <TabView
-      navigationState={{ index, routes }}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      initialLayout={{ width: layout.width }}
-    />
-    <Button
+      <View style={[{display: 'flex', flexDirection: 'row'}]}>
+        <View style={{flex: 0.2, backgroundColor: Colors.light, height: '96%'}}>
+          <Menu />
+        </View>
+        <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+        />
+      </View>
+
+      <View style={[{display: 'flex', marginTop: layout.height - 105, flexDirection: 'row'}]}>
+      <Button
         onPress={() => setOpen((prevOpen) => !prevOpen)}
         title={`${open ? 'Close' : 'Open'} drawer`}
-      />
+        />
+      </View>
   </Drawer>
   );
 }
@@ -127,7 +136,7 @@ const styles = StyleSheet.create({
   button: {
     margin: 10,
     width: 50,
-  }
+  },
 });
 
 export default App;
