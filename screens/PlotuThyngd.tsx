@@ -4,11 +4,13 @@ import { Text, TextInput, View } from 'react-native';
 import { styles } from '../styles';
 import SelectDropdown from 'react-native-select-dropdown';
 
+type PlotutegundirKey = 'Svart' | 'Ryðfrítt' | 'Ál';
+
 function PlotuThyngdScreen(): React.JSX.Element {
     const [breiddInputValue, setBreiddInputValue] = useState(0);
     const [lengdInputValue, setLengdInputValue] = useState(0);
     const [thykktInputValue, setThykktInputValue] = useState(0);
-    const [edlisThyngdInputValue, setEdlisThyngdInputValue] = useState(0);
+    const [edlisThyngdInputValue, setEdlisThyngdInputValue] = useState(8);
 
     const plotutegundir = ['Svart', 'Ryðfrítt', 'Ál'];
     const plotutegundirToNumbers: Record<PlotutegundirKey, number> = {
@@ -17,9 +19,12 @@ function PlotuThyngdScreen(): React.JSX.Element {
         'Ál': 2.7,
     };
 
-    !edlisThyngdInputValue ? setEdlisThyngdInputValue(8) : edlisThyngdInputValue;
-
-    type PlotutegundirKey = 'Svart' | 'Ryðfrítt' | 'Ál';
+    const handleTextInputChange = (value: string, setState: React.Dispatch<React.SetStateAction<number>>) => {
+        const num = parseInt(value, 10);
+        if (!isNaN(num)) {
+            setState(num);
+        }
+    };
 
     return (
         <View style={[{ flexDirection: 'row', }]}>
@@ -30,19 +35,19 @@ function PlotuThyngdScreen(): React.JSX.Element {
             <TextInput
                 keyboardType="numeric"
                 style={styles.input}
-                onChange={(e) => setLengdInputValue(parseInt(e.nativeEvent.text, 10))}
+                onChange={(text) => handleTextInputChange(text.nativeEvent.text, setLengdInputValue)}
             />
             <Text style={styles.sectionTitle}>Breidd</Text>
             <TextInput
                 keyboardType="numeric"
                 style={styles.input}
-                onChange={(e) => setBreiddInputValue(parseInt(e.nativeEvent.text, 10))}
+                onChange={(e) => handleTextInputChange(e.nativeEvent.text, setBreiddInputValue)}
             />
             <Text style={styles.sectionTitle}>Þykkt</Text>
             <TextInput
                 keyboardType="numeric"
                 style={styles.input}
-                onChange={(e) => setThykktInputValue(parseInt(e.nativeEvent.text, 10))}
+                onChange={(e) => handleTextInputChange(e.nativeEvent.text, setThykktInputValue)}
             />
             <SelectDropdown
                 defaultValue={plotutegundir[0]}
@@ -55,11 +60,11 @@ function PlotuThyngdScreen(): React.JSX.Element {
 
             </View>
 
-            <Text style={styles.sectionTitle}>
-                Þyngd plötu:
-                {(thykktInputValue && breiddInputValue && lengdInputValue && edlisThyngdInputValue)
-                ? ' ' + reiknaPlotuThyngd(breiddInputValue, lengdInputValue, thykktInputValue, edlisThyngdInputValue) + ' KG' : ''}
-            </Text>
+            {breiddInputValue && lengdInputValue && thykktInputValue && edlisThyngdInputValue ? (
+                <Text style={styles.sectionTitle}>
+                    Þyngd plötu: {reiknaPlotuThyngd(breiddInputValue, lengdInputValue, thykktInputValue, edlisThyngdInputValue)} KG
+                </Text>
+            ) : null}
         </View>
     );
 }
