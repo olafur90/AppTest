@@ -2,47 +2,70 @@
 import React, { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { styles } from '../styles';
+import SelectDropdown from 'react-native-select-dropdown';
 
 function PlotuThyngdScreen(): React.JSX.Element {
-    const [breiddInputValue, setBreiddInputValue] = useState('');
-    const [lengdInputValue, setLengdInputValue] = useState('');
-    const [thykktInputValue, setThykktInputValue] = useState('');
-    const [edlisThyngdInputValue, setEdlisThyngdInputValue] = useState('');
+    const [breiddInputValue, setBreiddInputValue] = useState(0);
+    const [lengdInputValue, setLengdInputValue] = useState(0);
+    const [thykktInputValue, setThykktInputValue] = useState(0);
+    const [edlisThyngdInputValue, setEdlisThyngdInputValue] = useState(0);
+
+    const plotutegundir = ['Svart', 'Ryðfrítt', 'Ál'];
+    const plotutegundirToNumbers: Record<PlotutegundirKey, number> = {
+        'Svart': 8,
+        'Ryðfrítt': 8,
+        'Ál': 2.7,
+    };
+
+    !edlisThyngdInputValue ? setEdlisThyngdInputValue(8) : edlisThyngdInputValue;
+
+    type PlotutegundirKey = 'Svart' | 'Ryðfrítt' | 'Ál';
 
     return (
-        <View>
-            <Text style={styles.sectionTitle}>Lengd í millimetrum</Text>
+        <View style={[{ flexDirection: 'row', }]}>
+            <View style={[{ width: '50%'}]}>
+            <Text style={styles.sectionDescription}>Öll mál skulu vera í millimetrum</Text>
+
+            <Text style={styles.sectionTitle}>Lengd</Text>
             <TextInput
                 keyboardType="numeric"
                 style={styles.input}
-                onChange={(e) => setLengdInputValue(e.nativeEvent.text)}
+                onChange={(e) => setLengdInputValue(parseInt(e.nativeEvent.text, 10))}
             />
-            <Text style={styles.sectionTitle}>Breidd í millimetrum</Text>
+            <Text style={styles.sectionTitle}>Breidd</Text>
             <TextInput
                 keyboardType="numeric"
                 style={styles.input}
-                onChange={(e) => setBreiddInputValue(e.nativeEvent.text)}
+                onChange={(e) => setBreiddInputValue(parseInt(e.nativeEvent.text, 10))}
             />
-            <Text style={styles.sectionTitle}>Þykkt í millimetrum</Text>
+            <Text style={styles.sectionTitle}>Þykkt</Text>
             <TextInput
                 keyboardType="numeric"
                 style={styles.input}
-                onChange={(e) => setThykktInputValue(e.nativeEvent.text)}
+                onChange={(e) => setThykktInputValue(parseInt(e.nativeEvent.text, 10))}
             />
-            <Text style={styles.sectionTitle}>Eðlisþyngd</Text>
-            <TextInput
-                keyboardType="numeric"
-                style={styles.input}
-                onChange={(e) => setEdlisThyngdInputValue(e.nativeEvent.text)}
-            />
+            <SelectDropdown
+                defaultValue={plotutegundir[0]}
+                data={plotutegundir}
+                buttonStyle={styles.dropdown}
+                onSelect={(selectedItem) => {
+                    const key = selectedItem as PlotutegundirKey;
+                    setEdlisThyngdInputValue(plotutegundirToNumbers[key]);
+                }} />
+
+            </View>
 
             <Text style={styles.sectionTitle}>
                 Þyngd plötu:
                 {(thykktInputValue && breiddInputValue && lengdInputValue && edlisThyngdInputValue)
-                ? (parseInt(breiddInputValue, 10) * parseInt(lengdInputValue, 10) * parseInt(thykktInputValue, 10) * parseInt(edlisThyngdInputValue, 10)) / 1000000 : 0} KG
+                ? ' ' + reiknaPlotuThyngd(breiddInputValue, lengdInputValue, thykktInputValue, edlisThyngdInputValue) + ' KG' : ''}
             </Text>
         </View>
     );
+}
+
+function reiknaPlotuThyngd(breidd: number, lengd: number, thykkt: number, edlisThyngd: number): number {
+    return (breidd * lengd * thykkt * edlisThyngd) / 1000000;
 }
 
 export default PlotuThyngdScreen;

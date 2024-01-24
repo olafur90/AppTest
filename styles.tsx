@@ -13,9 +13,10 @@ export const styles = StyleSheet.create({
       marginTop: 12,
     },
     sectionDescription: {
-      marginTop: 8,
       fontSize: 18,
       fontWeight: '400',
+      marginLeft: 12,
+      marginTop: 8,
     },
     highlight: {
       fontWeight: '700',
@@ -29,6 +30,11 @@ export const styles = StyleSheet.create({
       height: 40,
       marginLeft: 12,
       padding: 10,
-      width: '15%',
+    },
+    dropdown: {
+      borderWidth: 1,
+      height: 40,
+      margin: 'auto',
+      width: '90%',
     },
   });

@@ -23,6 +23,7 @@ function HomeScreen(): React.JSX.Element {
             renderScene={renderScene}
             onIndexChange={setIndex}
             initialLayout={{ width: layout.width }}
+            style={{ backgroundColor: '#dee' }}
         />
     );
 }

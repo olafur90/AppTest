@@ -20,22 +20,33 @@ import { StackNavigationProp, createStackNavigator } from '@react-navigation/sta
 
 import HomeScreen from './screens/HomeScreen';
 import ProfileScreen from './screens/PlotuThyngd';
+import Hornamal from './screens/Hornamal';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 type RootStackParamList = {
   Home: undefined;
   PlotuThyngd: undefined;
+  Hornamal: undefined;
 };
 
-const RenderDrawerContent = () => {
+type RenderDrawerContentProps = {
+  closeDrawer: () => void;
+}
+
+const RenderDrawerContent = ({ closeDrawer }: RenderDrawerContentProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  const navigateAndCloseDrawer = (screen: keyof RootStackParamList) => {
+    closeDrawer();
+    navigation.navigate(screen);
+  };
 
   return (
     <View>
-      <Text>Drawer contents</Text>
-      <Button title="Home" onPress={() => navigation.navigate('Home')} />
-      <Button title="Plötuþyngd" onPress={() => navigation.navigate('PlotuThyngd')} />
+      <Button title="Home" onPress={() => navigateAndCloseDrawer('Home')} />
+      <Button title="Reikna Plötuþyngd" onPress={() => navigateAndCloseDrawer('PlotuThyngd')} />
+      <Button title="Hornamál" onPress={() => navigateAndCloseDrawer('Hornamal')} />
     </View>
   );
 };
@@ -43,17 +54,22 @@ const RenderDrawerContent = () => {
 function App(): React.JSX.Element {
   const [open, setOpen] = useState(false);
 
+  const closeDrawer = () => {
+    setOpen(false);
+  };
+
   return (
     <NavigationContainer>
       <Drawer
         open={open}
         onOpen={() => setOpen(true)}
         onClose={() => setOpen(false)}
-        renderDrawerContent={() => <RenderDrawerContent />}
+        renderDrawerContent={() => <RenderDrawerContent closeDrawer={closeDrawer} />}
       >
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="Home">
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="PlotuThyngd" component={ProfileScreen} />
+          <Stack.Screen name="Hornamal" component={Hornamal} />
         </Stack.Navigator>
       </Drawer>
       <Button
