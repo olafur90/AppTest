@@ -27,7 +27,7 @@ function PlotuThyngdScreen(): React.JSX.Element {
     };
 
     return (
-        <View style={[{ flexDirection: 'row', }]}>
+        <View style={[{ flexDirection: 'row'}]}>
             <View style={[{ width: '50%'}]}>
             <Text style={styles.sectionDescription}>Öll mál skulu vera í millimetrum</Text>
 
