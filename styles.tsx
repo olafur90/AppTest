@@ -1,6 +1,20 @@
 /* eslint-disable prettier/prettier */
 import { StyleSheet } from 'react-native';
 
+export const dropdownStyles = StyleSheet.create({
+  dropdownContainer: {
+    marginTop: 32,
+    marginLeft: 40,
+    paddingHorizontal: 24,
+  },
+  dropdown: {
+    borderWidth: 1,
+    height: 40,
+    margin: 'auto',
+    width: '90%',
+  },
+});
+
 export const styles = StyleSheet.create({
     sectionContainer: {
       marginTop: 32,
@@ -30,11 +44,5 @@ export const styles = StyleSheet.create({
       height: 40,
       marginLeft: 12,
       padding: 10,
-    },
-    dropdown: {
-      borderWidth: 1,
-      height: 40,
-      margin: 'auto',
-      width: '90%',
     },
   });

@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
-import { styles } from '../styles';
+import { dropdownStyles, styles } from '../styles';
 import SelectDropdown from 'react-native-select-dropdown';
 
 type PlotutegundirKey = 'Svart' | 'Ryðfrítt' | 'Ál';
@@ -49,15 +49,17 @@ function PlotuThyngdScreen(): React.JSX.Element {
                 style={styles.input}
                 onChange={(e) => handleTextInputChange(e.nativeEvent.text, setThykktInputValue)}
             />
-            <SelectDropdown
-                defaultValue={plotutegundir[0]}
-                data={plotutegundir}
-                buttonStyle={styles.dropdown}
-                onSelect={(selectedItem) => {
-                    const key = selectedItem as PlotutegundirKey;
-                    setEdlisThyngdInputValue(plotutegundirToNumbers[key]);
-                }} />
 
+            <View style={dropdownStyles.dropdownContainer}>
+                <SelectDropdown
+                    defaultValue={plotutegundir[0]}
+                    data={plotutegundir}
+                    buttonStyle={dropdownStyles.dropdown}
+                    onSelect={(selectedItem) => {
+                        const key = selectedItem as PlotutegundirKey;
+                        setEdlisThyngdInputValue(plotutegundirToNumbers[key]);
+                    }} />
+            </View>
             </View>
 
             {breiddInputValue && lengdInputValue && thykktInputValue && edlisThyngdInputValue ? (

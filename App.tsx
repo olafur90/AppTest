@@ -21,6 +21,7 @@ import { StackNavigationProp, createStackNavigator } from '@react-navigation/sta
 import HomeScreen from './screens/HomeScreen';
 import ProfileScreen from './screens/PlotuThyngd';
 import Hornamal from './screens/Hornamal';
+import Pilorabil from './screens/Pilorabil';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -28,6 +29,7 @@ type RootStackParamList = {
   Home: undefined;
   PlotuThyngd: undefined;
   Hornamal: undefined;
+  Pilorabil: undefined;
 };
 
 type RenderDrawerContentProps = {
@@ -47,6 +49,7 @@ const RenderDrawerContent = ({ closeDrawer }: RenderDrawerContentProps) => {
       <Button title="Home" onPress={() => navigateAndCloseDrawer('Home')} />
       <Button title="Reikna Plötuþyngd" onPress={() => navigateAndCloseDrawer('PlotuThyngd')} />
       <Button title="Hornamál" onPress={() => navigateAndCloseDrawer('Hornamal')} />
+      <Button title="Pílórabil" onPress={() => navigateAndCloseDrawer('Pilorabil')} />
     </View>
   );
 };
@@ -70,6 +73,7 @@ function App(): React.JSX.Element {
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="PlotuThyngd" component={ProfileScreen} />
           <Stack.Screen name="Hornamal" component={Hornamal} />
+          <Stack.Screen name="Pilorabil" component={Pilorabil} />
         </Stack.Navigator>
       </Drawer>
       <Button
