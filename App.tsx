@@ -25,6 +25,11 @@ import Pilorabil from './screens/Pilorabil';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
+/* TODO:
+  Þvermál hrings: T.d. ef með 1000 pípu, þá er þvermálið 1000
+  og ummálið r^2 * pí = 1000 * 1000 * 3.14
+*/
+
 type RootStackParamList = {
   Home: undefined;
   PlotuThyngd: undefined;
