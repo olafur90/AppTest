@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
-import { dropdownStyles, styles } from '../styles';
+import { dropdownStyles, plotuThyngdStyles, styles } from '../styles';
 import SelectDropdown from 'react-native-select-dropdown';
 
 type PlotutegundirKey = 'Svart' | 'Ryðfrítt' | 'Ál';
@@ -23,45 +23,60 @@ function PlotuThyngdScreen(): React.JSX.Element {
     const num = parseInt(value, 10);
     if (!isNaN(num)) {
       setState(num);
+    } else {
+      setState(0);
     }
   };
 
   return (
-    <View>
+    <View style={{ backgroundColor: '#1878ab' }}>
       <View>
-        <Text style={styles.sectionTitle}>Lengd</Text>
-        <TextInput
-            keyboardType="numeric"
-            style={styles.input}
-            onChange={(text) => handleTextInputChange(text.nativeEvent.text, setLengdInputValue)}
-        />
-        <Text style={styles.sectionTitle}>Breidd</Text>
-        <TextInput
-            keyboardType="numeric"
-            style={styles.input}
-            onChange={(e) => handleTextInputChange(e.nativeEvent.text, setBreiddInputValue)}
-        />
-        <Text style={styles.sectionTitle}>Þykkt</Text>
-        <TextInput
-            keyboardType="numeric"
-            style={styles.input}
-            onChange={(e) => handleTextInputChange(e.nativeEvent.text, setThykktInputValue)}
-        />
+        <Text style={plotuThyngdStyles.sectionTitle}>Lengd</Text>
+        <View style={plotuThyngdStyles.inputContainer}>
+          <TextInput
+              keyboardType="numeric"
+              style={plotuThyngdStyles.input}
+              onChange={(text) => handleTextInputChange(text.nativeEvent.text, setLengdInputValue)}
+          /><Text>mm</Text>
+        </View>
+        
+        <Text style={plotuThyngdStyles.sectionTitle}>Breidd</Text>
+        <View style={plotuThyngdStyles.inputContainer}>
+          <TextInput
+              keyboardType="numeric"
+              style={plotuThyngdStyles.input}
+              onChange={(e) => handleTextInputChange(e.nativeEvent.text, setBreiddInputValue)}
+          /><Text>mm</Text>
+        </View>
 
+        <Text style={plotuThyngdStyles.sectionTitle}>Þykkt</Text>
+        <View style={plotuThyngdStyles.inputContainer}>
+          <TextInput
+              keyboardType="numeric"
+              style={plotuThyngdStyles.input}
+              onChange={(e) => handleTextInputChange(e.nativeEvent.text, setThykktInputValue)}
+          /><Text>mm</Text>
+        </View>
+
+        {/* dropdown */}
         <View style={dropdownStyles.dropdownContainer}>
             <SelectDropdown
             defaultValue={plotutegundir[0]}
             data={plotutegundir}
             buttonStyle={dropdownStyles.dropdown}
+            renderDropdownIcon={() => <Text style={dropdownStyles.iconStyle}>▼</Text>}
+            dropdownIconPosition='right'
             onSelect={(selectedItem) => {
                 const key = selectedItem as PlotutegundirKey;
                 setEdlisThyngdInputValue(plotutegundirToNumbers[key]);
             }} />
-      </View>
+        </View>
+        {/* end dropdown */}
+
       </View>
 
-      {breiddInputValue && lengdInputValue && thykktInputValue && edlisThyngdInputValue ? (
-        <Text style={styles.sectionTitle}>
+      {breiddInputValue !== 0 && lengdInputValue !== 0 && thykktInputValue !== 0 ? (
+        <Text style={plotuThyngdStyles.totalPlotuThyngd}>
           Þyngd plötu: {reiknaPlotuThyngd(breiddInputValue, lengdInputValue, thykktInputValue, edlisThyngdInputValue)} KG
         </Text>
       ) : null}
@@ -69,8 +84,8 @@ function PlotuThyngdScreen(): React.JSX.Element {
   );
 }
 
-function reiknaPlotuThyngd(breidd: number, lengd: number, thykkt: number, edlisThyngd: number): number {
-  return (breidd * lengd * thykkt * edlisThyngd) / 1000000;
+function reiknaPlotuThyngd(breidd: number, lengd: number, thykkt: number, edlisThyngd: number): string {
+  return ((breidd * lengd * thykkt * edlisThyngd) / 1000000).toFixed(2);
 }
 
 export default PlotuThyngdScreen;
