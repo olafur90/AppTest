@@ -2,16 +2,10 @@
 /* eslint-disable prettier/prettier */
 
 import 'react-native-gesture-handler';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import {
- Button,
- Text,
- View,
-} from 'react-native';
-
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import HomeScreen from './screens/SnittToflurScreen';
@@ -26,12 +20,19 @@ const Drawer = createDrawerNavigator<RootStackParamList>();
 
 function DrawerNavigator() {
   return (
-    <Drawer.Navigator initialRouteName="Snitttöflur">
+    <Drawer.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#1878ab' },
+        headerTintColor: '#fff',
+        drawerActiveBackgroundColor: '#1878ab',
+        drawerActiveTintColor: '#fff' }}
+        initialRouteName="Snitttöflur"
+    >
       <Drawer.Screen name="Snitttöflur" component={HomeScreen} options={{ title: 'Snitt töflur'}} />
-      <Drawer.Screen name="PlotuThyngd" component={ProfileScreen} />
-      <Drawer.Screen name="Hornamal" component={Hornamal} />
-      <Drawer.Screen name="Pilorabil" component={Pilorabil} />
-      <Drawer.Screen name="UmmalHrings" component={UmmalHrings} />
+      <Drawer.Screen name="PlotuThyngd" component={ProfileScreen} options={{ title: 'Plötuþyngd'}}/>
+      <Drawer.Screen name="Hornamal" component={Hornamal} options={{ title: 'Hornamál'}} />
+      <Drawer.Screen name="Pilorabil" component={Pilorabil} options={{ title: 'Pílórabil'}}/>
+      <Drawer.Screen name="UmmalHrings" component={UmmalHrings} options={{ title: 'Ummál pípu'}} />
     </Drawer.Navigator>
   )
 }

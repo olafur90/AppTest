@@ -2,11 +2,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { Alert, Button, ScrollView, Text, TextInput, View, useWindowDimensions } from 'react-native';
-import { useEffect, useState } from 'react';
+import { ScrollView, Text, View, useWindowDimensions } from 'react-native';
+import { useState } from 'react';
 import { SceneMap, TabView } from 'react-native-tab-view';
 import { styles } from '../styles';
-import { DataTable, PaperProvider, DefaultTheme } from 'react-native-paper';
+import { DataTable } from 'react-native-paper';
 
 function SnittToflurScreen(): React.JSX.Element {
 
@@ -24,25 +24,16 @@ function SnittToflurScreen(): React.JSX.Element {
       renderScene={renderScene}
       onIndexChange={setIndex}
       initialLayout={{ width: layout.width }}
-      style={{ backgroundColor: '#dee' }}
+      style={{ backgroundColor: '#ffffff' }}
     />
   );
 }
-
-const theme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: '#da1',
-    accent: '#fff',
-  },
-};
 
 const FirstRoute = () => (
   <View>
     <ScrollView>
     <DataTable>
-      <DataTable.Header style={{ backgroundColor: '#2a9' }}>
+      <DataTable.Header style={{ backgroundColor: '#ffffff' }}>
         <DataTable.Title style={{ marginLeft: 20 }} textStyle={{ fontWeight: 'bold', fontSize: 24 }}>Nafnmál</DataTable.Title>
         <DataTable.Title style={{flexDirection: 'row-reverse'}} textStyle={{ fontWeight: 'bold', fontSize: 24 }}>Minnst</DataTable.Title>
         <DataTable.Title style={{ flexDirection: 'row-reverse'}} textStyle={{ fontWeight: 'bold', fontSize: 24 }}>Mest</DataTable.Title>

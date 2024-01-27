@@ -1,8 +1,9 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
-import { Text, TextInput, View } from 'react-native';
-import { dropdownStyles, plotuThyngdStyles, styles } from '../styles';
+import { Image, Text, View } from 'react-native';
+import { dropdownStyles, plotuThyngdStyles } from '../styles';
 import SelectDropdown from 'react-native-select-dropdown';
+import { TextInput } from 'react-native-paper';
 
 type PlotutegundirKey = 'Svart' | 'Ryðfrítt' | 'Ál';
 
@@ -29,31 +30,31 @@ function PlotuThyngdScreen(): React.JSX.Element {
   };
 
   return (
-    <View style={{ backgroundColor: '#1878ab' }}>
-      <View>
-        <Text style={plotuThyngdStyles.sectionTitle}>Lengd</Text>
+    <View style={{ backgroundColor: '#1878ab', paddingTop: 20, paddingBottom: 500 }}>
+        <Text style={plotuThyngdStyles.plotuthyngd}>Reikna Plötuþyngd</Text>
         <View style={plotuThyngdStyles.inputContainer}>
           <TextInput
               keyboardType="numeric"
               style={plotuThyngdStyles.input}
+              label="Lengd"
               onChange={(text) => handleTextInputChange(text.nativeEvent.text, setLengdInputValue)}
           /><Text>mm</Text>
         </View>
-        
-        <Text style={plotuThyngdStyles.sectionTitle}>Breidd</Text>
+
         <View style={plotuThyngdStyles.inputContainer}>
           <TextInput
               keyboardType="numeric"
               style={plotuThyngdStyles.input}
+              label="Breidd"
               onChange={(e) => handleTextInputChange(e.nativeEvent.text, setBreiddInputValue)}
           /><Text>mm</Text>
         </View>
 
-        <Text style={plotuThyngdStyles.sectionTitle}>Þykkt</Text>
         <View style={plotuThyngdStyles.inputContainer}>
           <TextInput
               keyboardType="numeric"
               style={plotuThyngdStyles.input}
+              label="Þykkt"
               onChange={(e) => handleTextInputChange(e.nativeEvent.text, setThykktInputValue)}
           /><Text>mm</Text>
         </View>
@@ -73,13 +74,13 @@ function PlotuThyngdScreen(): React.JSX.Element {
         </View>
         {/* end dropdown */}
 
-      </View>
-
       {breiddInputValue !== 0 && lengdInputValue !== 0 && thykktInputValue !== 0 ? (
         <Text style={plotuThyngdStyles.totalPlotuThyngd}>
           Þyngd plötu: {reiknaPlotuThyngd(breiddInputValue, lengdInputValue, thykktInputValue, edlisThyngdInputValue)} KG
         </Text>
       ) : null}
+
+      <Image source={require('../img/steel_plate.png')} style={{ alignSelf: 'center', marginTop: 40 }}/>
     </View>
   );
 }

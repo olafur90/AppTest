@@ -2,10 +2,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { Image, Text, TextInput, View, useWindowDimensions } from 'react-native';
+import { Image, Text, View, useWindowDimensions } from 'react-native';
 import { useEffect, useState } from 'react';
 import { SceneMap, TabView } from 'react-native-tab-view';
 import { styles } from '../styles';
+import { TextInput } from 'react-native-paper';
 
 const FirstRoute = () => {
  const [baseValue, setBaseValue] = useState(0);
@@ -13,17 +14,17 @@ const FirstRoute = () => {
 
  return (
  <View style={styles.sectionContainer}>
-  <Image src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Pythagoras-Theorem-1.png" style={{ width: 200, height: 200 }} />
-  <Text style={styles.sectionTitle}>Lengd a</Text>
+  <Image src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Pythagoras-Theorem-1.png" style={{marginBottom: 30, alignSelf: 'center', width: 200, height: 200 }} />
   <TextInput
    keyboardType="numeric"
    style={styles.input}
+   label="Lengd a"
    onChange={(e) => setAltitudeValue(parseInt(e.nativeEvent.text, 10))}
    />
-  <Text style={styles.sectionTitle}>Lengd b</Text>
   <TextInput
    keyboardType="numeric"
    style={styles.input}
+   label={'Lengd b'}
    onChange={(e) => setBaseValue(parseInt(e.nativeEvent.text, 10))}
    />
 
