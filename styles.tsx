@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-const windowWidth = Dimensions.get('window').width;
 
 export const dropdownStyles = StyleSheet.create({
  dropdownContainer: {
@@ -20,42 +19,6 @@ export const dropdownStyles = StyleSheet.create({
     color: '#000',
 } ,
 });
-
-export const plotuThyngdStyles = StyleSheet.create({
-  plotuthyngd: {
-    color: '#000',
-    fontSize: 24,
-    fontWeight: '600',
-    marginBottom: 12,
-    textAlign: 'center',
-  },
-  totalPlotuThyngd: {
-    color: '#000',
-    fontSize: 24,
-    fontWeight: '600',
-    marginTop: 12,
-    textAlign: 'center',
-  },
-  input: {
-    color: '#000',
-    marginLeft: 12,
-    marginRight: 12,
-    width: '40%',
-   },
-   inputContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    marginTop: 5,
-   },
-   sectionTitle: {
-    color: '#fff',
-    fontSize: 24,
-    fontWeight: '600',
-    marginTop: 12,
-    marginLeft: windowWidth / 2 - 96, 
-   },
-})
 
 export const styles = StyleSheet.create({
   sectionContainer: {

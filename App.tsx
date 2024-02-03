@@ -5,16 +5,14 @@ import 'react-native-gesture-handler';
 import React, { useState } from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import HomeScreen from './screens/SnittToflurScreen';
-import ProfileScreen from './screens/PlotuThyngd';
-import Hornamal from './screens/Hornamal';
-import Pilorabil from './screens/Pilorabil';
-import UmmalHrings from './screens/UmmalHrings';
-
-const Stack = createStackNavigator<RootStackParamList>();
+import HomeScreen from './screens/SnittToflur/SnittToflurScreen';
+import ProfileScreen from './screens/PlotuThyngd/PlotuThyngd';
+import Hornamal from './screens/Hornamal/Hornamal';
+import Pilorabil from './screens/Pilorabil/Pilorabil';
+import UmmalHrings from './screens/UmmalHrings/UmmalHrings';
+import BilMilliGata from './screens/BilMilliGata/BilMilliGata';
 
 const Drawer = createDrawerNavigator<RootStackParamList>();
 
@@ -33,8 +31,9 @@ function DrawerNavigator() {
       <Drawer.Screen name="Hornamal" component={Hornamal} options={{ title: 'Hornamál'}} />
       <Drawer.Screen name="Pilorabil" component={Pilorabil} options={{ title: 'Pílórabil'}}/>
       <Drawer.Screen name="UmmalHrings" component={UmmalHrings} options={{ title: 'Ummál pípu'}} />
+			<Drawer.Screen name="BilMilliGata" component={BilMilliGata} options={{ title: 'Bil milli gata'}} />
     </Drawer.Navigator>
-  )
+  );
 }
 
 type RootStackParamList = {
@@ -43,14 +42,13 @@ type RootStackParamList = {
  Hornamal: undefined;
  Pilorabil: undefined;
  UmmalHrings: undefined;
+ BilMilliGata: undefined;
 };
 
 function App(): React.JSX.Element {
  const [open, setOpen] = useState(false);
 
- const closeDrawer = () => {
-  setOpen(false);
- };
+
 
  return (
   <NavigationContainer onStateChange={() => setOpen(false)}>
